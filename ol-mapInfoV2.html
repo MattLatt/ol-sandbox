@@ -84,9 +84,7 @@
   </head>
   <body>
     <div id="map" class="map">
-      <pre id="info">
-	<pre id="info-inner">
-      </pre>
+      <pre id="info"/>
     </div>
     <div id="mouse-position" class="custom-mouse-position"> </div>
     <script>
@@ -126,19 +124,26 @@
           })]
       });
 
-      map.on('pointermove', showInfo);
+      map.on('moveend', showInfo);
     
       var info = document.getElementById('info');
       
       function showInfo(event) {
+      
+        var map = event.map;
 	// Retina device
 	//var ratio = e.frameState.pixelRatio;
 	var ratio = 1.0;
 	var picRes = map.getView().getResolution();
+	var center = map.getView().getCenter();
 	
-	var scaleMap = Math.round(picRes*ratio*96.0/0.0254)
-	
-	info.innerText = 'Env 1/'+scaleMap+' ème'   ;
+	var scaleMap = picRes*ratio*96.0/0.0254;
+	var precision = Math.min(Math.floor(Math.log10(scaleMap))-1., 5);
+	var roundedScale=Math.round(scaleMap/Math.pow(10,precision))*Math.pow(10,precision);
+	var roundedX=Math.round(center[0]*100.)/100.;
+	var roundedY=Math.round(center[1]*100.)/100.;
+
+	info.innerText = 'Env 1/'+roundedScale+' ème\nCenter X: '+roundedX+'\nCenter Y: '+roundedY    ;
         info.style.opacity = 1;
       }
     </script>
