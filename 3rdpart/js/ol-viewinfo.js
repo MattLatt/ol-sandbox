@@ -246,9 +246,19 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
 
   //var html = count + ' ' + suffix;
   
-  var scale = pointResolution/96*101.6/0.0254;
   
-  var html= 'Env 1/'+scale+'<br>';
+  // Retina device
+  //var ratio = e.frameState.pixelRatio;
+  var ratio = 1.0;
+  
+  var scaleMap = pointResolution*ratio*96.0/101.6/0.0254;
+  var roundDigits = Math.min(Math.floor(Math.log10(scaleMap))-1., 5);
+  var roundedScale=Math.round(scaleMap/Math.pow(10,roundDigits))*Math.pow(10,roundDigits);
+  var roundedX=Math.round(center[0]*100.)/100.;
+  var roundedY=Math.round(center[1]*100.)/100.;  
+  
+  
+  var html= 'Env 1/'+roundedScale+'<br>';
   
   /*
   var algnLeft = '<br><p class="ol-view-info-alignleft">';
@@ -261,6 +271,8 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
   //MLA TODO tester bootstrao clearfix <div class="clearfix">...</div> https://getbootstrap.com/docs/4.0/utilities/clearfix/
   
   */
+
+
   
   var coordTemplate = 'X ('+this.coordsource_+')= {x}<br>Y ('+this.coordsource_+')= {y}';
   
