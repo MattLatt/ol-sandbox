@@ -4,11 +4,16 @@
     <meta charset="utf-8" />
     <title>OpenLayers - LayerSwitcher sidebar</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" />
+    -->
+    <link rel="stylesheet" href="3rdpart/css/fontawesome-5.5.0-free/all.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="3rdpart/css/bootstrap-4.1.3-dist/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="3rdpart/css/ol-4.6.5-dist/ol.css" />
     <link rel="stylesheet" href="3rdpart/css/ol3-sidebar.css" />
+    <link rel="stylesheet" href="3rdpart/css/viewinfo.css" />    
     <link rel="stylesheet" href="sidebar.css" />
+    
   </head>
   <body>
 
@@ -21,7 +26,7 @@
           <li><a href="#home" role="tab"><i class="fa fa-bars"></i></a></li>
           <li><a href="#profile" role="tab"><i class="fa fa-user"></i></a></li>
           <li><a href="#position" role="tab"><i class="fa fa-envelope"></i></a></li>
-          <li class="disabled"><a href="https://github.com/js/sidebar-v2" role="tab" target="_blank"><i class="fa fa-github"></i></a></li>
+          <li class="disabled"><a href="https://github.com/js/sidebar-v2" role="tab" target="_blank"><i class="fa fa-gitlab"></i></a></li>
         </ul>
 
         <ul role="tablist">
@@ -120,13 +125,19 @@
     <!-- END OF SIDEBAR DIV -->
 
     <div id="map" class="sidebar-map"></div>
+    <!--
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" crossorigin="anonymous"></script>
+     <script src="3rdpart/js/bootstrap-4.1.3-dist/bootstrap.min.js" crossorigin="anonymous"></script> 
     <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
-    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+    <script src="3rdpart/js/ol-4.6.5-dist/ol.js"></script>
     <script src="3rdpart/js/ol3-sidebar.js"></script>
+    <script src="3rdpart/js/ol-viewinfo.js"></script>    
     <script src="sidebar.js"></script>
 
   </body>
