@@ -14,8 +14,16 @@
   border-radius:3px;
   color:#eee;
   font-size:12px;
-  text-align:right;
+  text-align:center;
   padding:2px;
   margin:1px
   will-change:contents,width
+}
+
+.ol-view-info-alignleft{
+  float:left;
+}
+
+.ol-view-info-alignright{
+  float:right;
 }

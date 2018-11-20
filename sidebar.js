@@ -1,5 +1,7 @@
 (function() {
-    var viewInfoControl = new ol.control.ViewInfo();
+    var viewInfoControl = new ol.control.ViewInfo({
+	coordsource: 'center'  //'center' or 'pointer'
+    });
   
     var map = new ol.Map({
         target: 'map',

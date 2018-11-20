@@ -63,6 +63,12 @@ ol.control.ViewInfo = function (opt_options) {
    */
   this.renderedHTML_ = '';
 
+   /**
+   * @private
+   * @type {string}
+   */
+  this.coordsource_ = options.coordsource || 'center'
+  
   var render = options.render ? options.render : ol.control.ViewInfo.render;
 
   ol.control.Control.call(this, {
@@ -238,13 +244,41 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
     ++i;
   }
 
-  var html = count + ' ' + suffix+ '<br> Centre X= <br> Centre Y=';
+  //var html = count + ' ' + suffix;
+  
+  var scale = pointResolution/96*101.6/0.0254;
+  
+  var html= 'Env 1/'+scale+'<br>';
+  
+  /*
+  var algnLeft = '<br><p class="ol-view-info-alignleft">';
+  var algnRight = '</p><p class="ol-view-info-alignright">';  
+  var algnReset = '<div style="clear: both;"></div>';
+    
+  var coordTemplate = algnLeft +'X ('+this.coordsource_+')='+algnRight+'{x}</p>'+algnReset;
+  coordTemplate = coordTemplate + algnLeft + 'Y ('+this.coordsource_+')='+algnRight+'{y}</p>';
+  
+  //MLA TODO tester bootstrao clearfix <div class="clearfix">...</div> https://getbootstrap.com/docs/4.0/utilities/clearfix/
+  
+  */
+  
+  var coordTemplate = 'X ('+this.coordsource_+')= {x}<br>Y ('+this.coordsource_+')= {y}';
+  
+  var precision = 2;
+  if (units == ol.control.ScaleLineUnits.DEGREES)  {
+    precision = 5
+  }
+  
+  html = html + ol.coordinate.format(center, coordTemplate, precision);
+  
   if (this.renderedHTML_ != html) {
     this.innerElement_.innerHTML = html;
     this.renderedHTML_ = html;
   }
 
-  if (this.renderedWidth_ != width) {
+  //if (this.renderedWidth_ != width) {
+  if (true) {
+    width = 135;
     this.innerElement_.style.width = width + 'px';
     this.renderedWidth_ = width;
   }
