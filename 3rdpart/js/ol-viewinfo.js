@@ -69,6 +69,13 @@ ol.control.ViewInfo = function (opt_options) {
    */
   this.coordsource_ = options.coordsource || 'center'
   
+ 
+   /**
+   * @private
+   * @type {string}
+   */
+  this.coordprojection_ = options.coordproj || 'EPSG:3857' 
+  
   var render = options.render ? options.render : ol.control.ViewInfo.render;
 
   ol.control.Control.call(this, {
@@ -104,6 +111,17 @@ ol.control.ViewInfo.prototype.getUnits = function() {
     this.get(ol.control.ViewInfo.Property_.UNITS));
 };
 
+/**
+ * Return the projection to use in the view info.
+ * @return {string} The proj to use in the view info.
+ * @observable
+ * @api
+ */
+ol.control.ViewInfo.prototype.getProj= function() {
+  return /** @type {ol.control.ScaleLineUnits|undefined} */ (
+    this.get(ol.control.ViewInfo.Property_.COORDPROJ));
+};
+
 
 /**
  * Update the view info element.
@@ -131,6 +149,14 @@ ol.control.ViewInfo.prototype.handleUnitsChanged_ = function() {
 
 
 /**
+ * @private
+ */
+ol.control.ViewInfo.prototype.handleProjectionChanged_ = function() {
+  this.updateElement_();
+};
+
+
+/**
  * Set the units to use in the view info.
  * @param {ol.control.ScaleLineUnits} units The units to use in the view info.
  * @observable
@@ -138,6 +164,17 @@ ol.control.ViewInfo.prototype.handleUnitsChanged_ = function() {
  */
 ol.control.ViewInfo.prototype.setUnits = function(units) {
   this.set(ol.control.ViewInfo.Property_.UNITS, units);
+};
+
+
+/**
+ * Set the units to use in the view info.
+ * @param {string} projection The proj to use in the view info.
+ * @observable
+ * @api
+ */
+ol.control.ViewInfo.prototype.setProjection = function(proj) {
+  this.set(ol.control.ViewInfo.Property_.COORDPROJ, proj);
 };
 
 
@@ -156,108 +193,39 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
   }
 
   var center = viewState.center;
+  console.log('center ('+center[0]+', '+center[1]+');');
   var projection = viewState.projection;
+  console.log('projection ('+projection+');');  
   var units = this.getUnits();
-  var pointResolutionUnits = units == ol.control.ScaleLineUnits.DEGREES ?
-    ol.proj.Units.DEGREES :
-    ol.proj.Units.METERS;
-  var pointResolution =
-      ol.proj.getPointResolution(projection, viewState.resolution, center, pointResolutionUnits);
+  console.log('units ('+units+');');  
+  
+  var pointResolutionUnits = (units == ol.control.ScaleLineUnits.DEGREES) ?  ol.proj.Units.DEGREES :  ol.proj.Units.METERS;
+     
+  console.log('pointResolutionUnits ('+pointResolutionUnits+');');  
+
+  var pointResolution = ol.proj.getPointResolution(projection, viewState.resolution, center, pointResolutionUnits);
+
+  console.log('pointResolution ('+pointResolution+');');  
+  
   if (units != ol.control.ScaleLineUnits.DEGREES) {
     pointResolution *= projection.getMetersPerUnit();
   }
-
-  var nominalCount = this.minWidth_ * pointResolution;
-  var suffix = '';
-  if (units == ol.control.ScaleLineUnits.DEGREES) {
-    var metersPerDegree = ol.proj.METERS_PER_UNIT[ol.proj.Units.DEGREES];
-    if (projection.getUnits() == ol.proj.Units.DEGREES) {
-      nominalCount *= metersPerDegree;
-    } else {
-      pointResolution /= metersPerDegree;
-    }
-    if (nominalCount < metersPerDegree / 60) {
-      suffix = '\u2033'; // seconds
-      pointResolution *= 3600;
-    } else if (nominalCount < metersPerDegree) {
-      suffix = '\u2032'; // minutes
-      pointResolution *= 60;
-    } else {
-      suffix = '\u00b0'; // degrees
-    }
-  } else if (units == ol.control.ScaleLineUnits.IMPERIAL) {
-    if (nominalCount < 0.9144) {
-      suffix = 'in';
-      pointResolution /= 0.0254;
-    } else if (nominalCount < 1609.344) {
-      suffix = 'ft';
-      pointResolution /= 0.3048;
-    } else {
-      suffix = 'mi';
-      pointResolution /= 1609.344;
-    }
-  } else if (units == ol.control.ScaleLineUnits.NAUTICAL) {
-    pointResolution /= 1852;
-    suffix = 'nm';
-  } else if (units == ol.control.ScaleLineUnits.METRIC) {
-    if (nominalCount < 0.001) {
-      suffix = 'μm';
-      pointResolution *= 1000000;
-    } else if (nominalCount < 1) {
-      suffix = 'mm';
-      pointResolution *= 1000;
-    } else if (nominalCount < 1000) {
-      suffix = 'm';
-    } else {
-      suffix = 'km';
-      pointResolution /= 1000;
-    }
-  } else if (units == ol.control.ScaleLineUnits.US) {
-    if (nominalCount < 0.9144) {
-      suffix = 'in';
-      pointResolution *= 39.37;
-    } else if (nominalCount < 1609.344) {
-      suffix = 'ft';
-      pointResolution /= 0.30480061;
-    } else {
-      suffix = 'mi';
-      pointResolution /= 1609.3472;
-    }
-  } else {
-    ol.asserts.assert(false, 33); // Invalid units
-  }
-
-  var i = 3 * Math.floor(
-      Math.log(this.minWidth_ * pointResolution) / Math.log(10));
-  var count, width;
-  while (true) {
-    count = ol.control.ViewInfo.LEADING_DIGITS[((i % 3) + 3) % 3] *
-        Math.pow(10, Math.floor(i / 3));
-    width = Math.round(count / pointResolution);
-    if (isNaN(width)) {
-      this.element_.style.display = 'none';
-      this.renderedVisible_ = false;
-      return;
-    } else if (width >= this.minWidth_) {
-      break;
-    }
-    ++i;
-  }
-
-  //var html = count + ' ' + suffix;
   
+  var coordDisplay = ol.proj.transform(center, projection, this.coordprojection_);
+  
+  console.log('coordDisplay ('+coordDisplay[0]+', '+coordDisplay[1]+');');  
   
   // Retina device
   //var ratio = e.frameState.pixelRatio;
   var ratio = 1.0;
   
-  var scaleMap = pointResolution*ratio*96.0/101.6/0.0254;
+  var scaleMap = pointResolution*ratio*96.0/0.0254;
+  scaleMap = scaleMap*96./101.6;
   var roundDigits = Math.min(Math.floor(Math.log10(scaleMap))-1., 5);
   var roundedScale=Math.round(scaleMap/Math.pow(10,roundDigits))*Math.pow(10,roundDigits);
-  var roundedX=Math.round(center[0]*100.)/100.;
-  var roundedY=Math.round(center[1]*100.)/100.;  
-  
-  
+  var roundedX=Math.round(coordDisplay[0]*100.)/100.;
+  var roundedY=Math.round(coordDisplay[1]*100.)/100.;  
+    
   var html= 'Env 1/'+roundedScale+'<br>';
   
   /*
@@ -271,8 +239,6 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
   //MLA TODO tester bootstrao clearfix <div class="clearfix">...</div> https://getbootstrap.com/docs/4.0/utilities/clearfix/
   
   */
-
-
   
   var coordTemplate = 'X ('+this.coordsource_+')= {x}<br>Y ('+this.coordsource_+')= {y}';
   
@@ -281,7 +247,7 @@ ol.control.ViewInfo.prototype.updateElement_ = function() {
     precision = 5
   }
   
-  html = html + ol.coordinate.format(center, coordTemplate, precision);
+  html = html + ol.coordinate.format(coordDisplay, coordTemplate, precision);
   
   if (this.renderedHTML_ != html) {
     this.innerElement_.innerHTML = html;

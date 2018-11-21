@@ -1,6 +1,13 @@
 (function() {
+  
+    proj4.defs("EPSG:2154","+proj=lcc +lat_1=49 +lat_2=44 +lat_0=46.5 +lon_0=3 +x_0=700000 +y_0=6600000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs");
+
+
+  
     var viewInfoControl = new ol.control.ViewInfo({
-	coordsource: 'center'  //'center' or 'pointer'
+	coordsource: 'center', //the coordinate to be displayed 'center'=center of the viewport or
+			      //'pointer'= mouse pointer
+	coordproj: 'EPSG:2154' //the projection used to display coordinates in the components
     });
   
     var map = new ol.Map({
@@ -11,6 +18,7 @@
           }
         }*/).extend([viewInfoControl]),
         layers: [
+        /*
             new ol.layer.Group({
                 'title': 'Base maps',
                 'fold': 'open',
@@ -61,10 +69,38 @@
                         })
                     })
                 ]
+            })*/
+	/*
+          new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+                  'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+              url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+                  'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
             })
+          })	*/
+	
+          new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+                  'rest/services/World_Imagery/MapServer">ArcGIS</a>',
+              url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+                  'World_Imagery/MapServer/tile/{z}/{y}/{x}'
+            })
+          })
+    /*
+         new ol.layer.Tile({
+            source: new ol.source.XYZ({
+              attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+                  'rest/services/High_Resolution_30cm_Imagery/MapServer">ArcGIS</a>',
+              url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+                  'High_Resolution_30cm_Imagery/MapServer/tile/{z}/{y}/{x}'
+            })
+          })	*/
+    
         ],
         view: new ol.View({
-            center: ol.proj.transform([-0.92, 52.96], 'EPSG:4326', 'EPSG:3857'),
+            center: ol.proj.transform([2.48, 48.28], 'EPSG:4326', 'EPSG:3857'),
             zoom: 6
         })
     });
