@@ -1,0 +1,116 @@
+$(document).ready(function() {
+
+    var env_work = location.hostname; 
+    var env_channel = getDevice();
+    var env_language = "fr";
+    var env_country = "FR";
+    var env_site = getEnvSite();
+    var env_cookies = "allowed";
+    var page_cat1 = "Authentification";
+    if (window.is_error_page==undefined)
+        var page_cat2 = "Accueil";
+    else    
+        var page_cat2 = "Error";
+    var page_cat3 = "";
+    var page_cat4 = "";
+    var PAGE_CAT_SEPARATOR = "/"
+    var page_name = page_cat1+ PAGE_CAT_SEPARATOR+page_cat2;
+    var type_erreur="";
+
+    var ev_nom = ""; // 'se_souvenir_de_moi_oui / me_connecter / je_n_arrive_pas_a_m_identifier / creer_un_compte
+    var ev_type = ""; // toggle_switch / bouton / lien
+    var ev_zone = ""; // content
+    var ev_label_error= "";
+
+    var dataLayer = {};
+
+    function fillTcVars() {
+		window.tc_vars = window.tc_vars || {};
+		for ( var k in dataLayer) {
+			window.tc_vars[k] = dataLayer[k];
+		}
+	}
+
+    function setDataLayerParam(key, value) {
+		dataLayer[key] = value;
+	}
+
+    function loadContainer() {
+		if (jQuery) {
+			jQuery.getScript("/sso/XUI/custom-login/libs/tc_mireauthent_20.js");
+		}
+	}
+	
+	function createTgDataLayer() {
+		setDataLayerParam("env_work", env_work);
+		setDataLayerParam("env_channel", env_channel);
+		setDataLayerParam("env_language", env_language);
+		setDataLayerParam("env_country", env_country);
+		setDataLayerParam("env_site", env_site);
+		setDataLayerParam("env_cookies", env_cookies);
+		setDataLayerParam("page_cat1", page_cat1);
+        setDataLayerParam("page_cat2", page_cat2);
+        setDataLayerParam("page_cat3", page_cat3);
+        setDataLayerParam("page_cat4", page_cat4);
+		setDataLayerParam("page_name", page_name);
+		setDataLayerParam("type_error", type_erreur);
+		fillTcVars();
+	}
+
+	createTgDataLayer();
+    loadContainer();
+	
+	$("#loginButton_0").click(function(){
+		
+		    var trackDataConnexion = {
+				"ev_zone" : "toggle_switch",
+				"ev_nom" : "se_souvenir_de_moi_non",
+				"ev_type" : "bouton",
+			};
+		
+			if ($(".edf-remember-me input:checked").length)
+                trackDataConnexion.ev_nom = "se_souvenir_de_moi_oui";
+                
+            tc_events_20(this, "standard_event", trackDataConnexion);
+            console.log("event standard_event");
+            console.log(JSON.stringify(trackDataConnexion));
+			
+            var trackDataConnexion = {
+				"ev_zone" : "content",
+				"ev_nom" : "me_connecter",
+				"ev_type" : "bouton",
+			};
+			
+			tc_events_20(this, "standard_event", trackDataConnexion);
+            console.log("event standard_event");
+            console.log(JSON.stringify(trackDataConnexion));
+			
+
+
+
+	});
+
+    $(".identification-link").click(function(){
+        var trackDataConnexion = {
+				"ev_zone" : "content",
+				"ev_nom" : "je_n_arrive_pas_a_m_identifier",
+				"ev_type" : "lien"
+		};
+        tc_events_20(this, "standard_event", trackDataConnexion);
+        console.log("event standard_event");
+        console.log(JSON.stringify(trackDataConnexion));
+    });
+
+    
+    $("#createAccount").click(function(){
+        var trackDataConnexion = {
+				"ev_zone" : "content",
+				"ev_nom" : "creer_un_compte",
+				"ev_type" : "lien"
+		};
+        tc_events_20(this, "standard_event", trackDataConnexion);
+        console.log("event standard_event");
+        console.log(JSON.stringify(trackDataConnexion));
+    });
+
+});

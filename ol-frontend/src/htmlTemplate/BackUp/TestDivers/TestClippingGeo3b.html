@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name=description content="">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Simple Map with mask between 2 layers</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+      var initialCenter = ol.proj.fromLonLat([2, 48]);
+      var initialZoom = 6;
+
+      var xyzWorldTopo = new ol.source.XYZ({
+	    attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+		'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+	    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+		'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+      });
+      
+      var imagery = new ol.layer.Tile ({
+      source: xyzWorldTopo
+      });
+      
+      
+      var view = new ol.View({
+        center: initialCenter,
+        zoom: initialZoom
+      });
+
+      var map = new ol.Map({
+        layers: [
+         new ol.layer.Tile({
+            source: new ol.source.OSM()
+          }),
+	  imagery
+        ],
+        target: 'map',
+        view: view
+      });
+
+
+      
+       /**
+       * Apply a filter on "postcompose" events.
+       */
+      imagery.on('postcompose', function(event) {
+      var selectedKernel =  [
+          0, -1, 0,
+          -1, 5, -1,
+          0, -1, 0
+        ];
+        
+        convolve(event.context, selectedKernel);
+      });
+
+
+      /**
+       * Apply a convolution kernel to canvas.  This works for any size kernel, but
+       * performance starts degrading above 3 x 3.
+       * @param {CanvasRenderingContext2D} context Canvas 2d context.
+       * @param {Array.<number>} kernel Kernel.
+       */
+      function convolve(context, kernel) {
+        var canvas = context.canvas;
+        var width = canvas.width;
+        var height = canvas.height;
+
+        var size = Math.sqrt(kernel.length);
+        var half = Math.floor(size / 2);
+
+        var inputData = context.getImageData(0, 0, width, height).data;
+
+        var output = context.createImageData(width, height);
+        var outputData = output.data;
+
+        for (var pixelY = 0; pixelY < height; ++pixelY) {
+          for (var pixelX = 0; pixelX < width; ++pixelX) {
+              var outputIndex = (pixelsAbove + pixelX) * 4;
+            outputData[outputIndex]     = inputData[outputIndex];
+            outputData[outputIndex + 1] = inputData[outputIndex + 1];
+            outputData[outputIndex + 2] = inputData[outputIndex + 2];
+            outputData[outputIndex + 3] = 128;
+          }
+        }
+        context.putImageData(output, 0, 0);
+      }
+
+    </script>
+  </body>
+</html>

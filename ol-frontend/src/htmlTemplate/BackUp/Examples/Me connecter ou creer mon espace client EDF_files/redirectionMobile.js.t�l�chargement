@@ -1,0 +1,88 @@
+//Patch to fix IE7 and IE8 indexof function issue.
+if(!Array.prototype.indexOf){
+	Array.prototype.indexOf = function(obj){
+	    for(var i=0; i<this.length; i++){
+	        if(this[i]==obj){
+	            return i;
+	        }
+	    }
+	    return -1;
+	};
+}
+
+//Checks the redirection parameter.
+var getParam = window.location.href.split('?')[1];
+if(getParam != null && getParam.indexOf("redirect=false") > -1){
+	newCookie('m-particuliers-redirect','false',20);
+}
+
+//Checks the redirection cookie.
+if(getCookieMobileRedirect('m-particuliers-redirect') === null){
+	//Redirection according to the screen and userAgent.
+	var nbre_pixel_ref = 640*400;
+	var largeur_ecran 		= screen.width;
+	var hauteur_ecran 		= screen.height;
+	var nbre_pixel_ecran 	= largeur_ecran*hauteur_ecran;
+
+	var userAgents = navigator.userAgent;
+	var strUserAgent = userAgents.toLowerCase();
+	var nbAppWebKit = strUserAgent.split('applewebkit/')[1];
+
+	if(typeof(nbAppWebKit) !='undefined'){
+		if(nbAppWebKit.length !== 0){
+			for(var i=0; i < nbAppWebKit.length; i++){
+				if(nbAppWebKit[i] !='.' && isNaN(nbAppWebKit[i])){
+					nbAppWebKit = nbAppWebKit.substring(0,i);
+					break;
+				}
+			}
+		}
+	}
+
+	var redirige = false;
+	if((nbre_pixel_ecran < nbre_pixel_ref) || ( strUserAgent.indexOf("mobile") != -1 && strUserAgent.indexOf("android") != -1 && strUserAgent.indexOf("applewebkit") != -1 && typeof(nbAppWebKit) !='undefined' && nbAppWebKit <= 534.30)){
+		redirige = true;
+	}
+
+	if (!mainRedirectionURL && !homeRedirectionURL) {
+		redirige = false;
+	}
+
+	if(redirige && mainRedirectionURL){
+		window.location = mainRedirectionURL;
+	}else if (redirige){
+		window.location = homeRedirectionURL;
+	}
+}
+
+//Function to Set a Cookie
+function newCookie(nom, valeur, minutes){
+    var expire = "";
+	if (minutes) {
+		var date = new Date();
+		date.setTime(date.getTime()+(minutes*60*1000));
+		expire = "; expires="+date.toGMTString();
+	}else{
+		expire = "";
+	}
+	document.cookie = nom+"="+valeur+expire+ "; path=/";
+}
+
+//Function to Get a Cookie.
+function getCookieMobileRedirect(name){
+	if(document.cookie.length === 0){
+		return null;
+	}
+
+	var regSepCookie = new RegExp('(; )', 'g');
+	var cookies = document.cookie.split(regSepCookie);
+
+	for(var i = 0; i < cookies.length; i++){
+		var regInfo = new RegExp('=', 'g');
+		var infos = cookies[i].split(regInfo);
+		if(infos[0] == name){
+			return unescape(infos[1]);
+		}
+	}
+	return null;
+}

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<!-- saved from url=(0466)https://espace-client.edf.fr/sso/XUI/#login/&realm=%2FINTERNET&goto=https%3A%2F%2Fespace-client.edf.fr%2Fsso%2Foauth2%2FINTERNET%2Fauthorize%3Fresponse_type%3Did_token%26scope%3Dopenid%2520profile%2520infotech%26client_id%3DSiteCP%26state%3DxgmFl1kKxVHaHWa9NuofN8s_krA%26redirect_uri%3Dhttps%253A%252F%252Fparticulier.edf.fr%252Ffr%252Faccueil%252Fespace-client%252Fmoduleopenidc.html%26nonce%3D2wojP-XoPqithPhJaGjQ2ZqkJZsrCAXvGUtV617AQvk%26response_mode%3Dform_post -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">    <meta name="robots" content="index,follow">    <meta name="description" content="Acceder a votre compte EDF pour gerer votre contrat d�electricit� et/ou gaz, suivre votre consommation d�energie ou telecharger votre facture EDF.">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Me connecter ou creer mon espace client EDF</title><script type="text/javascript" async="" src="./Me connecter ou creer mon espace client EDF_files/recaptcha__fr.js.téléchargement"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="./Me connecter ou creer mon espace client EDF_files/main.js.téléchargement"></script><style type="text/css"></style><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="config/AppConfiguration" src="./Me connecter ou creer mon espace client EDF_files/AppConfiguration.js.téléchargement"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="config/ThemeConfiguration" src="./Me connecter ou creer mon espace client EDF_files/ThemeConfiguration.js.téléchargement"></script><link rel="icon" type="image/x-icon" href="https://espace-client.edf.fr/sso/XUI/favicon.ico?v=13.5.0"><link rel="shortcut icon" type="image/x-icon" href="https://espace-client.edf.fr/sso/XUI/favicon.ico?v=13.5.0"><link rel="stylesheet" type="text/css" href="./Me connecter ou creer mon espace client EDF_files/bootstrap-3.3.5-custom.css"><link rel="stylesheet" type="text/css" href="./Me connecter ou creer mon espace client EDF_files/structure.css"><link rel="stylesheet" type="text/css" href="./Me connecter ou creer mon espace client EDF_files/theme.css"><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="org/forgerock/openam/ui/common/components/Footer" src="./Me connecter ou creer mon espace client EDF_files/Footer.js.téléchargement"></script><script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="org/forgerock/commons/ui/common/components/LoginHeader" src="./Me connecter ou creer mon espace client EDF_files/LoginHeader.js.téléchargement"></script></head>
+    <!--[if IE 9]>
+    <body style="display:none" class="ie9">
+    <![endif]-->
+    <!--[if (gt IE 9)|!(IE)]><!-->
+    <body style="display:none">
+    <!--<![endif]-->
+        <div id="messages" class="clearfix"></div>
+        <div id="wrapper" aria-busy="false"><!-- Copyright 2015 ForgeRock AS.
+	License terms: https://forgerock.org/cddlv1-0/ -->
+<div id="login-base">
+    <div id="loginBaseLogo" class="main-logo-holder" style="display: none;"><!-- Copyright 2015 ForgeRock AS.
+	License terms: https://forgerock.org/cddlv1-0/ -->
+<img class="main-logo" style="width:88px" src="./Me connecter ou creer mon espace client EDF_files/login-logo.png" alt="EDF">
+</div>
+    <div id="content">
+
+
+    <meta name="description" content="Accéder à votre compte EDF pour gérer votre contrat d’électricité et/ou gaz, suivre votre consommation d’énergie ou télécharger votre facture EDF.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Me connecter ou créer mon espace client EDF</title>
+    <script type="text/javascript" src="./Me connecter ou creer mon espace client EDF_files/utils.js.téléchargement"></script>
+    <script src="./Me connecter ou creer mon espace client EDF_files/api.js.téléchargement"></script>
+    <!--<script type="text/javascript" src="./custom-login/libs/tc_mireauth_20.js"></script>-->
+    <script type="text/javascript" src="./Me connecter ou creer mon espace client EDF_files/main.js(1).téléchargement"></script>
+    <script type="text/javascript" src="./Me connecter ou creer mon espace client EDF_files/tracking.js.téléchargement"></script>
+    <link rel="stylesheet" href="./Me connecter ou creer mon espace client EDF_files/main.min.css">
+    <!--<script type="text/javascript" src="./custom-login/libs/fastclick.js"></script>-->
+    <script type="application/javascript">
+        var CLIENT_OIDC_SITECP="SiteCP";
+        if (getEnvSite()==CLIENT_OIDC_SITECP && getRedirectArgument()!="false"){
+            var mainRedirectionURL = "https://m-particuliers.edf.com/espace-client/login";
+            var homeRedirectionURL = "https://m-particuliers.edf.com/";
+        }
+    </script>
+    <script type="text/javascript" src="./Me connecter ou creer mon espace client EDF_files/redirectionMobile.js.téléchargement"></script>
+
+
+
+<div id="edfConnect" role="main" style="display: block;">
+    <div class="edf-connection_wrapper">
+        <div class="background-img"></div>
+        <section class="edf-connection_content">
+            <a class="return-home" href="https://espace-client.edf.fr/sso/XUI/#" target="_self">
+                <span>Retour</span>
+            </a>
+            <button id="goBack" role="link" class="return-link">J'ai déjà un compte EDF</button>
+            <div class="help_wrapper">
+                <button class="info-btn">
+                    <span class="txt">
+                        <span class="txt-mobile">Aide</span>
+                        <span class="txt-desktop">Besoin d'aide&nbsp;?</span>
+                    </span>
+                </button>
+                <div class="help-txt">
+                    <p>Votre mot de passe doit être composé de minimum 8 caractères avec au moins 1 lettre, 1 chiffre et
+                        1 caractère spéciale.
+                        Nous vous recommandons de ne pas mettre de lien avec vous (nom, date de naissance, etc.) et
+                        d’utiliser des mots de passe différents sur les sites que vous fréquentez habituellement.
+                    </p>
+                </div>
+            </div>
+            <div class="edf-form_wrapper">
+                <div class="edf-header_form">
+                    <!-- edf logo -->
+                    <svg role="img" class="edf-logo" alt="EDF espace client : création ou connexion à votre compte EDF" xmlns="http://www.w3.org/2000/svg" width="86" height="37" viewBox="0 0 86 37">
+                        <g fill="none" fill-rule="evenodd">
+                            <path fill="#09357A" d="M64.813 25.59c2.367 0 4.293-.782 4.293-4.963 0-3.556-1.926-4.74-4.293-4.74H63.57v9.704h1.242zm1.252-12.522c4.288 0 7.189 2.709 7.189 7.559 0 6.096-3.984 7.898-8.159 7.898h-5.587c.02-.337 0-1.24 0-2.37V15.437c0-1.13.02-1.85 0-2.37h6.557zM79.33 26.155c0 1.131.055 2.37.055 2.37H75.24s.028-1.239.028-2.37V15.436c0-1.129-.028-2.368-.028-2.368h9.8v2.99s-2.19-.055-2.935-.055H79.33v3.113l2.775.03c.52 0 2.31-.03 2.31-.03v2.848s-1.589-.043-2.31-.043l-2.775.016v4.218zM47.786 18.909c.061-.895.381-2.972 2.64-2.972 2.313 0 2.44 1.953 2.44 2.984v.208s-1.545.042-2.469.042c-.924 0-2.625-.042-2.625-.042l.014-.22zm3.45 6.491c-1.95 0-3.45-1.31-3.45-3.361v-.174s3.622-.089 4.85-.089c2.088 0 2.95-.019 4.595-.042v-1.166c0-5.268-2.234-7.83-6.834-7.83-2.12 0-7.052.797-7.052 8.173 0 4.92 2.485 7.86 6.827 7.86 3.41 0 5.503-.869 7.02-1.976-.17-.256-1.442-2.538-1.607-2.787-.91.695-2.412 1.392-4.349 1.392z"></path>
+                            <path fill="#FE5815" d="M16.074 24.709c-.29.309-1.086.423-1.309.775-.34.534-1.123 1.75-1.736 2.33-1.972 1.872-6.194 2.812-8.277 1.023-.136.01-.056.088.106.6.152.969.933 3.243.645 3.824.186.645.383.409.736.766.243.243.342.875.62 1.046.317-.02.634-.043.951-.066.057.177.117.353.174.535l1.222-.09c.23.053.922.41 1.125.466.452-.033.905-.063 1.357-.095 1.036.276 1.94-.157 2.814-.747.487-.327 1.021-.275 1.454-.645.628-.538 1.481-1.59 1.881-2.317.981-1.783.65-6.05-.24-7.106-.348-.38-.759-.387-1.523-.3m8.204-1.17c-.735.563-1.044.424-1.475 1.293-.044 0 .066.132.02.132.44.874 1.443 1.228 2.183 1.842.23.194.853 1.274 1.15 1.353.331.397.55 1.494.765 1.494.227.309-.018 1.036.203 1.318.016 1.3-.165 1.393-.392 1.642 0 .09.125.327.125.415.062.063.583.437.811.39.707.024 3.61 2.288 3.841 2.725 2.083.156 1.931-.48 3.368-1.09.388-.166.697-.008.952-.274.266-.272.29-.81.545-1.09.035-5.12-6.935-9.971-12.096-10.15m5.656-10.822c-2.58.389-4.159 1.212-5.133 1.887-.68.474-.88.793-1.026.993-.147.2-.247.642-.174 1.108.075.462.263.955.665 1.229 3.17-.235 8.671-.435 9.742 2.228.057.37.14.593.148.682 1.05-.26.282-.167 1.827.076.355.055 1.227-.142 1.806-.283.263-.062.411-.301.411-.301s-.049-.253-.034-.391c0 0 .542.04.764-.13 1.465-.24.695-.927 1.387-1.703-.417-4.976-5.52-6.132-10.383-5.395M10.288 21.79c.567-.147 1.534-.223 2.04-.474.807-.405 3.581-2.344 2.698-3.923-.272-3.327-4.287-.515-5.996-1.682-1.729-.223-3.674-3.494-4.194-4.895-.203-.555-.119-.365-.397-.804.003-.045-.177.153-.175.106-.506.589-.418 1.104-.497 2.539-.227-.013-.452-.028-.68-.043-.044.52-.096.805-.34 1.072-.049.089-.1.173-.15.262-.43-.144-.216.06-.39-.298C.613 13.729.731 15.329 0 16.24c.033 2.988 5.947 6.674 10.288 5.55M22.67 1.986c.26-1.205 2.156-.923 1.861-1.69-.183-.48-1.074-.252-1.436-.164-.272.065-2.872.888-3.873 1L17.952.777c-1.63.22-2.572 1.518-3.48 2.55-.762.865-1.792 2.982-.972 4.249l-.138.83 1.855 2.71c.64.459.724.8 1.413 1.252l.425.64c.564.37 2.224.375 2.504.134 2.672.249 2.382-5.163 3.231-6.298-.108-.512-.557-1.041-.98-1.302.135-1.13-.033-2.78.86-3.556z"></path>
+                        </g>
+                    </svg>
+                    <h1 class="authentication_title" style="text-transform: none">Je me connecte pour suivre mes contrats EDF et mes consos</h1>
+                    <h1 class="create-account_title">Créer votre espace client</h1>
+                    <h1 class="error_title">Une erreur s’est produite</h1>
+                </div>
+                <form class="edf-connection_form" name="edfConnection" action="https://espace-client.edf.fr/sso/XUI/" method="post">
+                    <div class="email-input_wrapper">
+                        <input id="idToken1" name="callback_0" class="user-email" title="E-mail" placeholder="E-mail" type="text">
+                        <div class="clear-email_btn">effacer l'email</div>
+                    </div>
+                    <div class="user-password_wrapper">
+                        <input id="idToken2" name="callback_1" class="user-password" title="Mot de passe" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Mot de passe" type="password">
+                        <div id="hideShowPassword" class="hideShowPassword-toggle">afficher/cacher le mot de passe</div>
+                    </div>
+                    <span class="error-message">L'adresse email et/ou le mot de passe sont inconnus.</span>
+                    <div class="edf-remember-me">
+                        <label for="remember-me-switch" class="mdc-switch-label">Se souvenir de mon email</label>
+                        <div class="mdc-switch">
+                            <input type="checkbox" id="remember-me-switch" class="mdc-switch__native-control">
+                            <div class="mdc-switch__background">
+                                <div class="mdc-switch__knob"></div>
+                            </div>
+                        </div>
+                    </div>
+                     <input id="idToken3" name="callback_2" value="" style="display:none" data-validator="required" required="" data-validator-event="keyup" class="form-control input-lg" type="text">
+                    <div class="recatcha_wrapper">
+                    <div class="g-recaptcha" id="edf-recaptcha" data-sitekey="6LerpjcUAAAAADEjMij14Aui7iqZojirsGtId8kj"><div style="width: 304px; height: 78px;"><div><iframe src="./Me connecter ou creer mon espace client EDF_files/anchor.html" width="304" height="78" role="presentation" name="a-ibhfduhyqtsp" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox"></iframe></div><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none;  display: none; "></textarea></div></div></div>
+                    <input id="idToken4" style="display:none" name="callback_3" value="" data-validator="required" required="" data-validator-event="keyup" class="form-control input-lg" type="text">
+					<input id="idToken5" style="display:none" name="callback_4" value="" data-validator="required" required="" data-validator-event="keyup" class="form-control input-lg" type="text">
+                    <button id="connect" role="button" type="submit" class="btn btn-primary btn-md connect-btn">
+                        <span class="btn-content"><span class="txt">Me connecter</span></span>
+                    </button>
+                    <input id="loginButton_0" style="display:none" name="callback_3" role="button" index="0" value="Connexion" class="btn btn-lg btn-block btn-uppercase btn-primary" type="submit">
+                    <a class="identification-link" href="https://particulier.edf.fr/fr/accueil/connexion/je-n-arrive-pas-a-m-identifier/saisie-adresse-e-mail-ou-numero-client.html" target="_self">Je n'arrive pas à m'identifier</a>
+                </form>
+            </div>
+            <div class="edf-account-creation">
+                <div class="account-creation-text_wrapper">
+                    <h2>Première connexion&nbsp;?</h2>
+                    <p>Créez votre espace client pour tout savoir sur votre contrat EDF.</p>
+                </div>
+                <div class="btn-wrapper">
+                    <button role="button" id="createAccount" class="btn btn-success create-account">
+                            <span class="btn-content">
+                                <span class="txt">Créer un compte</span>
+                            </span>
+                    </button>
+                </div>
+            </div>
+            <div class="edf-new-account_wrapper">
+                <p>Etes-vous déjà client EDF&nbsp;?</p>
+                <div class="action-btn_wrapper">
+                    <a role="button" href="https://particulier.edf.fr/fr/accueil/connexion/creation-espace-nouveau-client/saisie-e-mail.html" target="_self" class="btn btn-secondary link-connexion">
+                        <span class="btn-content"><span class="txt">Non</span></span>
+                    </a>
+                    <a role="button" href="https://particulier.edf.fr/fr/accueil/connexion/creation-espace-client/saisie-e-mail.html" target="_self" class="btn btn-primary link-demenagement">
+                        <span class="btn-content"><span class="txt">Oui</span></span>
+                    </a>
+                    <button id="goBackBtn" class="btn btn-primary contour">
+                        <span class="btn-content"><span class="txt">J’ai déja un compte EDF</span></span>
+                    </button>
+                </div>
+            </div>
+            <div class="edf-error_wrapper">
+                <svg class="error-icon" xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40">
+                    <g fill="none" fill-rule="evenodd">
+                        <path fill="#FE5815" d="M.5 0h40v40H.5z"></path>
+                        <path stroke="#FFF" stroke-width="3" d="M20.51 23.99V9.093 23.99zM20.51 31v-2.91V31z"></path>
+                    </g>
+                </svg>
+                <p class="error-message">Veuillez réessayer plus tard…</p>
+                <button id="restartBtn" class="btn btn-secondary go-back_btn">
+                    <span class="btn-content"><span class="txt">retour</span></span>
+                </button>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+
+</div>
+</div>
+</div>
+        <div id="popup">
+            <div id="popup-content" class="radious"></div>
+        </div>
+        <footer id="footer" class="footer text-muted" style="background-color: rgba(0, 0, 0, 0.7); display: none;"><!-- Copyright 2015 ForgeRock AS.
+	License terms: https://forgerock.org/cddlv1-0/ -->
+<div class="container">
+    <a>
+        <img style="width:100px;;" src="./Me connecter ou creer mon espace client EDF_files/logo-horizontal.png" alt="EDF">
+    </a>
+    
+    <!--
+    <p>
+        <a href="mailto: "></a>
+        <br/>
+    </p>
+        Copyright &copy; 2017 EDF. Tout droit réservé.
+    -->
+    
+</div>
+</footer>
+        <script type="text/javascript">
+            var require = {
+                urlArgs : "v=13.5.0",
+                deps : ['main']
+            };
+        </script>
+        <script src="./Me connecter ou creer mon espace client EDF_files/requirejs-2.1.14-min.js.téléchargement"></script>
+    
+
+<div style="background-color: #fff; border: 1px solid #ccc; box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2); position: absolute; left: 0px; top: -10000px; transition: visibility 0s linear 0.3s, opacity 0.3s linear; opacity: 0; visibility: hidden; z-index: 2000000000;"><div style="width: 100%; height: 100%; position: fixed; top: 0px; left: 0px; z-index: 2000000000; background-color: #fff; opacity: 0.05;  filter: alpha(opacity=5)"></div><div class="g-recaptcha-bubble-arrow" style="border: 11px solid transparent; width: 0; height: 0; position: absolute; pointer-events: none; margin-top: -11px; z-index: 2000000000;"></div><div class="g-recaptcha-bubble-arrow" style="border: 10px solid transparent; width: 0; height: 0; position: absolute; pointer-events: none; margin-top: -10px; z-index: 2000000000;"></div><div style="z-index: 2000000000; position: relative;"><iframe title="Test recaptcha" src="./Me connecter ou creer mon espace client EDF_files/bframe.html" name="c-ibhfduhyqtsp" frameborder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox" style="width: 100%; height: 100%;"></iframe></div></div></body></html>

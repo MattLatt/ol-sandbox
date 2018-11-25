@@ -1,0 +1,322 @@
+﻿var CLIENT_OIDC_EDFETMOI="edf&moi";
+var CLIENT_OIDC_SITECP="SiteCP";
+var ERROR_MESSAGE_AUTH = "L'adresse email et/ou le mot de passe sont inconnus.";
+var ERROR_MESSAGE_CAPTCHA = "Veuillez completer le reCAPTCHA";
+var ERROR_MESSAGE_FILL_FORM = "Veuillez remplir l'adresse mail et le mot de passe";
+var ERROR_MESSAGE_FILL_EMAIL = "L’adresse mail n’est pas saisie";
+var ERROR_MESSAGE_FILL_PASSWORD = "Le mot de passe n’est pas saisi";
+var ERROR_MESSAGE_FILL_FORMAT_EMAIL = "Le format de l'e-mail est incorrect";
+var ERROR_MESSAGE_FILL_FORMAT_PASSWORD = "Le format du password est incorrect";
+var error_email = false;
+var error_format_email = false;
+var error_password = false;
+var error_format_password = false;
+
+var siteCPFQDN = "particulier.edf.fr";
+function validateEmail(email) {
+   var re = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+	return re.test((String(email).trim()).toLowerCase());
+}
+function validatePassword(password){
+	if(password!="" && password.length>0)
+		return true;
+    //return 6<password.length && password.length<21;
+}
+function getSiteCPFQDN(){
+    return siteCPFQDN;
+}
+function updateLinks(){
+   $(".identification-link").attr("href","https://"+getSiteCPFQDN()+"/fr/accueil/connexion/je-n-arrive-pas-a-m-identifier/saisie-adresse-e-mail-ou-numero-client.html");
+   $(".action-btn_wrapper .link-connexion").attr("href","https://"+getSiteCPFQDN()+"/fr/accueil/connexion/creation-espace-nouveau-client/saisie-e-mail.html");
+   $(".action-btn_wrapper .link-demenagement").attr("href","https://"+getSiteCPFQDN()+"/fr/accueil/connexion/creation-espace-client/saisie-e-mail.html");
+}
+var error_is_shown = false;
+ $(document).ready(function(){
+    'use strict';
+	var val = window.location.href ;
+	
+ if (val.indexOf("MES_INTERNAL_SAS") != -1){
+			document.getElementsByClassName("authentication_title")[0].innerHTML ="Connectez-vous ou créez votre espace client pour finaliser l'ouverture de votre contrat !"
+              }else{
+			document.getElementsByClassName("authentication_title")[0].innerHTML = "Je me connecte pour suivre mes contrats EDF et mes consos"
+			  }
+    // set the focus on email on page load
+    $('#idToken1').focus();
+    $('#loginBaseLogo').hide();
+    $('#footer').hide();
+    $("#wrapper #login-base #content .container").removeClass("container");
+
+    $(".return-home").click(function(){
+        if (history.length<=2)
+            window.location = 'https://'+getSiteCPFQDN();
+        else
+            history.back();
+    });
+    var OIDCClient = getEnvSite();
+    if (OIDCClient!="" && OIDCClient!=CLIENT_OIDC_SITECP){
+        $(".return-home").hide();
+    }
+    if (OIDCClient==CLIENT_OIDC_EDFETMOI){
+        $(".help_wrapper").hide();
+        $(".return-home").hide();
+        $(".authentication_title").hide();
+        $(".edf-header_form svg").wrap("<div class='div_wrapper'></div>");
+        $(".div_wrapper").wrap("<div class='div_div_wrapper'></div>")
+            .css("border-top", "2px solid #f3f3f3")
+            .css("border-bottom", "2px solid #f3f3f3")
+            .css("height","40px")
+            .css("display","inline-block")
+            .css("width","100%")
+            .css("position","relative");
+        $(".edf-header_form .edf-logo").css("height","100%");
+        $(".div_div_wrapper").css("position","absolute")
+            .css("top",0)
+            .css("width","100%");
+        $("#createAccount .btn-content .txt").text("Créer");
+        $(".edf-remember-me .mdc-switch-label").text("Se souvenir de moi");
+    }
+
+    // vue "client ou non"
+    $('#createAccount').click(function () { 
+	
+		var val = window.location.href ;	
+        if (val.indexOf("MES_INTERNAL_SAS") != -1){
+			 $('.edf-connection_content').addClass('new-account');
+        }else{
+			 window.location = "https://"+getSiteCPFQDN()+"/fr/accueil/connexion/creation-espace-client/saisie-e-mail.html";
+        }
+    });
+    // go back to authentification
+    $('#goBack, #goBackBtn').click(function () {
+        $('.edf-connection_content').removeClass('new-account');
+    });
+    $('#restartBtn').click(function () {
+        $('.edf-connection_content').removeClass('error');
+    });
+
+    // handles the display of help bubble
+    $('.help-txt').click(function () {
+        $(this).removeClass('open');
+    });
+    $('.info-btn').click(function () {
+        if(!($('.help-txt').hasClass('open'))) {
+            $('.help-txt').addClass('open');
+        }
+    });
+
+    function keyup_function(){
+        if (error_is_shown){
+            $('#idToken1,#idToken2').removeClass('invalid');
+            $('.error-message').removeClass('show');
+        }
+        error_is_shown = false;
+    }
+
+    // add filled class on input wrapper to display clear btn
+    $('#idToken1').keyup(function(){
+        if($(this).val().length !==0)
+            $('.email-input_wrapper').addClass('filled');
+        else
+            $('.email-input_wrapper').removeClass('filled');
+        keyup_function();
+    });
+
+    // add filled class on password wrapper to display show passworrd toggle btn
+    $('#idToken2').keyup(function(){
+        if($(this).val().length !==0) {
+            $('.user-password_wrapper').addClass('filled');
+        } else {
+            $('.user-password_wrapper').removeClass('filled');
+            $('#idToken2').prop('type','password');
+            $('#hideShowPassword').removeClass('show');
+        }
+        keyup_function();
+    });
+
+
+    // clears email field
+    $('.clear-email_btn').click(function() {
+        $('#idToken1').val('');
+        $('.email-input_wrapper').removeClass('filled');
+    });
+
+    // shows hides email
+    $('#hideShowPassword').click(function () {
+        if($(this).hasClass('show')){
+            $('#idToken2').prop('type','password');
+            $(this).removeClass('show');
+        }
+        else {
+            $(this).addClass('show');
+            $('#idToken2').prop('type','text');
+        }
+    });
+
+    // fake form validation to display error message
+    $('form').submit(function(e){
+        e.preventDefault(e);
+    });
+
+    $("#edfConnect").css("display","block"); 
+
+    
+    if (window.is_error_page==undefined){
+        require (["jquery","org/forgerock/commons/ui/common/components/Messages"],
+            function($,Messages){
+                $( document ).ready(function() {
+                        var number = 0; var is_enabled = true;var id;
+                        if ( $("#idToken3").length>0 )
+                            id = 3;
+                        else
+                            id = 1;
+                        $("#idToken"+id).hide();
+                        
+                        $("form").keypress(function(e) {   
+                            if(e.which == 13) {
+                                e.preventDefault();
+                                defaultSubmit();
+                                return false;
+                            }
+                        });
+                        $('#connect').click(function(e){
+                            e.preventDefault();
+                            defaultSubmit();
+                        });
+                        var email = localStorage.getItem("email");
+                        if (email!=undefined){
+                            $('#idToken1').val(email);
+                            $("#remember-me-switch").prop("checked",true)
+                        }
+                        
+                        var activated=false;
+                        function centerGoogleRecaptcha(){
+                            if (is_enabled){
+                                if($(".g-recaptcha>div").length>0){
+                                    $(".g-recaptcha>div").css("margin-left","auto").css("margin-right","auto");
+                                }
+                                else{
+                                    setTimeout(centerGoogleRecaptcha, 250);
+                                }
+                            }
+                        }
+                        
+                        $('#messages').bind('DOMSubtreeModified', function() {
+                            if ($("#messages .alert-danger,#messages .alert-warning").length>0){
+                                error_is_shown = true;
+                                $("#messages").hide();
+                                $('#idToken1,#idToken2').addClass('invalid');
+                                $(".error-message").text(ERROR_MESSAGE_AUTH);
+                                $('.error-message').addClass('show');
+                            }
+                            if (is_enabled){
+                                if ($("#messages .alert-danger").length>0  && !activated){
+                                    activated=true;
+                                    grecaptcha.reset();
+                                }
+                            }
+                        });
+                               
+                        function defaultSubmit() {
+                            if ($("#idToken1").val()=="" || $("#idToken1").val()==undefined ){
+                               error_email = true;
+                               $(".error-message").text(ERROR_MESSAGE_FILL_EMAIL);
+                            }else if ( !validateEmail($("#idToken1").val())){
+                                error_email = true;
+                                error_format_email = true;
+                                $(".error-message").text(ERROR_MESSAGE_FILL_FORMAT_EMAIL);
+                            }
+                            if ($("#idToken2").val()=="" || $("#idToken2").val()==undefined ){
+                                error_password =true;
+                                $(".error-message").text(ERROR_MESSAGE_FILL_PASSWORD);
+                            } else if ( !validatePassword($("#idToken2").val())){
+                                error_password = true;
+                                error_format_password = true;
+                                $(".error-message").text(ERROR_MESSAGE_FILL_FORMAT_PASSWORD);
+                            }
+                            if (error_email && error_password){
+                                 $(".error-message").text(ERROR_MESSAGE_FILL_FORM);
+                            }
+                            if (error_email)
+                                $('#idToken1').addClass('invalid');
+                            if (error_password)
+                                $('#idToken2').addClass('invalid');
+                            if (error_email || error_password){
+                                error_is_shown = true;
+                                $('.error-message').addClass('show');
+                                error_email = false;error_format_email=false;error_format_password=false;error_password=false;
+                                return;
+                            }
+                            if (!error_is_shown){
+                                activated=false;
+                                waitForElement();
+                            }
+                                
+                        } 
+
+                        function saveLogin(){
+                                if ($('#remember-me-switch:checked').length > 0){
+                                    localStorage.setItem("email",$('#idToken1').val());
+                                }else{
+                                    localStorage.removeItem("email");
+                                }   
+                        } 
+                        
+                        function waitForElement(){
+                            if(is_enabled && typeof grecaptcha!='undefined' && grecaptcha.getResponse()!="" ){
+                                $("#idToken"+id).val(grecaptcha.getResponse());
+                                $("#loginButton_0").prop('disabled', false).click();
+                                saveLogin();			            	
+                            }else if ( is_enabled==false){
+                                $("#idToken"+id).val("");
+                                $("#loginButton_0").prop('disabled', false).click();
+                                saveLogin();
+                            }else{
+                                error_is_shown = true;
+                                $(".error-message").text(ERROR_MESSAGE_CAPTCHA);
+                                $('.error-message').addClass('show');
+                                setTimeout(function(){
+                                    error_is_shown = false;
+                                    $('.error-message').removeClass('show');
+                                },5000);
+                                return;
+                            }
+                        }
+
+                        try{
+                            var realm = document.URL.split("realm=")[1].split("&")[0].split("#")[0];
+                        }catch(e){
+                            var realm = document.URL.split("XUI/#login/")[1].split("/")[0];
+                        }
+                        if (realm==''){
+                            realm='internet';
+                        }
+
+                        $('#idToken1').keyup();
+                        $('#idToken2').keyup();
+
+                        $.post("../json/authenticate?realm="+realm,function(data){
+                            siteCPFQDN = data.callbacks[5].output[0].value;
+                            updateLinks();
+                            if (data.callbacks[3].output[0].value=="false"){
+                                $(".edf-connection_form div.recatcha_wrapper").remove();
+                                is_enabled = false;
+                            }else{
+                                $(".recatcha_wrapper").append("<div class='g-recaptcha' id='edf-recaptcha' data-sitekey='"+data.callbacks[4].output[0].value+"'></div>")
+                                if (typeof grecaptcha == 'undefined'){
+                                    setTimeout(function(){ 
+                                        if (typeof grecaptcha == 'undefined'){
+                                            alert("Merci de vérifier votre connection internet")
+                                        }else{
+                                            grecaptcha.render("edf-recaptcha");
+                                        }
+                                    }, 4000);
+                                }
+                                else
+                                    grecaptcha.render("edf-recaptcha");
+                            }
+                        });
+                });
+        });
+    }
+
+});

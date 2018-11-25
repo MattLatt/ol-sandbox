@@ -1,0 +1,49 @@
+switch layers:
+https://openlayers.org/en/v4.6.5/examples/reusable-source.html
+
+https://openlayers.org/en/v4.6.5/examples/stamen.html
+
+POIs ? :
+https://openlayers.org/en/v4.6.5/examples/symbol-atlas-webgl.html
+
+Groupe de layers:
+https://openlayers.org/en/v4.6.5/examples/layer-group.html
+
+geojson:
+https://openlayers.org/en/v4.6.5/examples/geojson.html
+https://openlayers.org/en/v4.6.5/examples/geojson-vt.html
+
+ZoomCadré :
+https://openlayers.org/en/v4.6.5/examples/box-selection.html
+
+Orientation téléphone:
+http://openlayers.org/en/v4.6.5/examples/device-orientation.html?q=source
+
+Export image
+http://openlayers.org/en/v4.6.5/examples/export-pdf.html?q=layer
+
+https://github.com/MrRio/jsPDF
+-
+Liste des couches ESRI:
+https://services.arcgisonline.com/arcgis/rest/services
+
+Examples:
+http://openlayersbook.github.io/
+
+
+Mastering OpenLayers3
+http://www.packtpub.com/mapt/book/web_development/9781785281006/
+
+clipping:
+http://www.packtpub.com/mapt/book/web_development/9781785281006/7/ch07lvl1sec63/clipping-layers
+
+
+https://openlayers.org/workshop/fr/
+
+3rdpart:
+
+https://github.com/jonataswalker/ol-contextmenu
+
+https://github.com/Viglino/ol-ext
+
+https://github.com/nsidc/ol3-projection-switcher

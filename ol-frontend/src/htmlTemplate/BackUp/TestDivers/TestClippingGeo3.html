@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8>
+    <meta name=description content="">
+    <meta name=viewport content="width=device-width, initial-scale=1">
+    <title>Simple Map with mask between 2 layers</title>
+    <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+    <!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+    <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+      var initialCenter = [0, 0];
+      var initialZoom = 2;
+
+      var xyzWorldTopo = new ol.source.XYZ({
+	    attributions: 'Tiles © <a href="https://services.arcgisonline.com/ArcGIS/' +
+		'rest/services/World_Topo_Map/MapServer">ArcGIS</a>',
+	    url: 'https://server.arcgisonline.com/ArcGIS/rest/services/' +
+		'World_Topo_Map/MapServer/tile/{z}/{y}/{x}'
+      });
+      
+      var style = new ol.style.Style({
+        fill: new ol.style.Fill({
+          color: [0, 0, 0, 1]
+        })
+      });
+
+
+    var thing = new ol.geom.Polygon( [[
+    ol.proj.transform([-3.0,44.0], 'EPSG:4326', 'EPSG:3857'),
+    ol.proj.transform([-3.0,51.0], 'EPSG:4326', 'EPSG:3857'),
+    ol.proj.transform([8.0,51.0], 'EPSG:4326', 'EPSG:3857'),
+    ol.proj.transform([8.0,44.0], 'EPSG:4326', 'EPSG:3857'),
+    ol.proj.transform([-3.0,44.0], 'EPSG:4326', 'EPSG:3857'),    
+    ]]);
+    
+    console.log(thing);
+    
+    var featurething = new ol.Feature({
+	name: "Thing",
+	geometry: thing
+    });
+    
+  
+      
+      var geoJSONFormat = new ol.format.GeoJSON();
+      var vectorSource = new ol.source.Vector();
+
+         vectorSource.addFeatures(featurething);
+
+          var rasterSource = new ol.source.ImageVector({
+            source: vectorSource,
+            style: style
+          });
+          
+          var clipLayer = new ol.layer.Image({
+            source: rasterSource
+          });
+      
+      
+      var raster = new ol.source.Raster({
+            sources: [
+              new ol.source.OSM()
+            ],
+            operation: function(pixels, data) {
+              if (pixels[1][3] == 0) {
+                return [0, 0, 0, 1];
+              } else {
+                return pixels[0];
+              }
+            }
+       });
+      
+      var rasterLayer = new ol.layer.Image({
+            source: raster
+       });
+      
+
+      
+      var view = new ol.View({
+        center: initialCenter,
+        zoom: initialZoom
+      });
+
+      var map = new ol.Map({
+        layers: [
+           new ol.layer.Tile({
+            source: xyzWorldTopo
+          }),
+          rasterLayer
+         
+        ],
+        target: 'map',
+        view: view
+      });
+
+
+
+
+    </script>
+  </body>
+</html>
