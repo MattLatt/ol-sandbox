@@ -1,0 +1,59 @@
+
+Mesure:
+https://openlayers.org/en/v4.6.5/examples/measure.html
+
+Comparaison Archives:
+https://openlayers.org/en/v4.6.5/examples/layer-spy.html
+https://openlayers.org/en/v4.6.5/examples/layer-swipe.html
+
+Barre de Chargements:
+https://openlayers.org/en/v4.6.5/examples/image-load-events.html
+https://openlayers.org/en/v4.6.5/examples/tile-load-events.html
+
+Icon Sprites:
+https://openlayers.org/en/v4.6.5/examples/icon-sprite-webgl.html
+https://openlayers.org/en/v4.6.5/examples/symbol-atlas-webgl.html
+
+Hit tolerance:
+https://openlayers.org/en/v4.6.5/examples/hit-tolerance.html
+
+Dessin with snap:
+https://openlayers.org/en/v4.6.5/examples/draw-and-modify-features.html
+https://openlayers.org/en/v4.6.5/examples/snap.html
+
+Modif Geometrie:
+https://openlayers.org/en/v4.6.5/examples/modify-features.html
+https://openlayers.org/en/v4.6.5/examples/modify-test.html
+https://openlayers.org/en/v4.6.5/examples/translate-features.html
+
+Animations:
+https://openlayers.org/en/v4.6.5/examples/animation.html
+
+Clic Info:
+https://openlayers.org/en/v4.6.5/examples/vector-tile-info.html
+https://openlayers.org/en/v4.6.5/examples/box-selection.html
+https://openlayers.org/en/v4.6.5/examples/select-features.html
+
+Bootstrap Tooltips:
+https://openlayers.org/en/v4.6.5/examples/button-title.html
+
+Bloquer le zoom:
+https://openlayers.org/en/v4.6.5/examples/min-zoom.html
+
+Préchargement:
+https://openlayers.org/en/v4.6.5/examples/preload.html
+
+Transition affichage:
+https://openlayers.org/en/v4.6.5/examples/tile-transitions.html
+
+Changer la projection de la carte à la volée:
+https://openlayers.org/en/v4.6.5/examples/reprojection-by-code.html
+
+layer source change:
+https://openlayers.org/en/v4.6.5/examples/reusable-source.html
+
+Positionnement Label
+https://openlayers.org/en/v4.6.5/examples/vector-label-decluttering.html
+
+Bloquage du zoom:
+https://openlayers.org/en/v4.6.5/examples/zoom-constrained.html
