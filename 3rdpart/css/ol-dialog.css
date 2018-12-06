@@ -1,0 +1,121 @@
+/*
+.ol-dialog-alignleft{
+  float:left;
+}
+
+.ol-dialog-alignright{
+  float:right;
+}*/
+
+
+
+.ol-dialog {
+  position: absolute;
+  background-color: #fff;
+  padding: 0px;
+  text-align: left;
+  width: 150px;
+  height: 150px;
+  top: 200px;
+  left: 200px;
+  border-radius: 4px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.65);
+}
+
+.ol-dialog .ol-dialog-inner {
+  position: relative;
+  box-sizing: border-box;
+  float: left;
+  width: 100%;
+  height: 100%;
+  padding: 20px 0px;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-grabber {
+  position: absolute;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  top: 0px;
+  left: 0px;
+  padding: 3px;
+  font-size: 15px;
+  line-height: 15px;
+  color: #ccc;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-grabber:hover {
+  cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-close {
+  position: absolute;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  top: 0px;
+  right: 0px;
+  padding: 2px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #666;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-close:hover {
+  cursor: pointer;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-contents {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0 20px;
+  min-height: 50px;
+  overflow: auto;
+  box-sizing: border-box;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-resizer {
+  position: absolute;
+  box-sizing: border-box;
+  width: 20px;
+  height: 20px;
+  bottom: 0px;
+  right: 0px;
+  padding: 2px;
+  font-size: 16px;
+  line-height: 16px;
+  color: #ccc;
+}
+
+.ol-dialog
+  .ol-dialog-inner
+  .ol-dialog-resizer:hover {
+  cursor: grab;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+
+.fa-rotate-45 {
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
