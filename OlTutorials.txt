@@ -1,0 +1,3 @@
+http://www.acuriousanimal.com/thebookofopenlayers3/
+http://www.acuriousanimal.com/thebookofopenlayers3/chapter02_03_layer_groups.html
+http://www.acuriousanimal.com/thebookofopenlayers3/chapter06_01_basic_overlay.html

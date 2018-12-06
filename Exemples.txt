@@ -57,3 +57,9 @@ https://openlayers.org/en/v4.6.5/examples/vector-label-decluttering.html
 
 Bloquage du zoom:
 https://openlayers.org/en/v4.6.5/examples/zoom-constrained.html
+
+
+
+https://github.com/seiyria/bootstrap-slider
+http://github.com/acanimal/thebookofopenlayers3
+bootstrap-toggle : www.bootstraptoggle.com
