@@ -1,6 +1,6 @@
 var dlgInfoControl = new ol.control.Dialog({
   size: [300,300],
-  anchor: [250,250]
+  anchor: [250,250],
   minSize: [ 100, 100 ],
   maxSize: [ 350, 350 ],
 });

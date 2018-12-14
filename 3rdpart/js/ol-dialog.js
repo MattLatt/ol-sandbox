@@ -1,9 +1,11 @@
 
 ol.control.Dialog = function (opt_options) {
 
-  var options = opt_options ? opt_options : {};
+  this.options_ = opt_options ? opt_options : {};
 
-  var className = options.className !== undefined ? options.className : 'ol-dialog';
+  var className = this.options_.className !== undefined ? this.options_.className : 'ol-dialog';
+  
+
   
   this.initLayout_(opt_options);
 
@@ -24,25 +26,45 @@ ol.control.Dialog = function (opt_options) {
    * @type {number|undefined}
    */
   this.renderedWidth_ = undefined;
+  
+  
+  /**
+   * @private
+   * @type {Array of number|undefined}
+   */
 
+  var initPos = this.options_.anchor !== undefined ? this.options_.anchor : null;
+    
+  
+  this._oldMousePos  = initPos;
+  
+  
   /**
    * @private
    * @type {string}
    */
   this.renderedHTML_ = '';
   
-  var render = options.render ? options.render : ol.control.Dialog.render;
+  var render = this.options_.render ? this.options_.render : ol.control.Dialog.render;
 
   ol.control.Control.call(this, {
     element: this.element_,
     render: render,
-    target: options.target
+    target: this.options_.target
   });
-    
 
+  /*
+  ol.interaction.Pointer.call(this, {
+    handleDownEvent: this.moveStart,
+    handleDragEvent: this.mouseMove,
+    handleMoveEvent: null,
+    handleUpEvent: this.mouseUp
+  });  
+*/
 };
 
 ol.inherits(ol.control.Dialog, ol.control.Control);
+//ol.inherits(ol.control.Dialog, ol.interaction.Pointer);
 //ol.inherits(ol.control.Dialog, ol.Observable);
 
 
@@ -95,11 +117,10 @@ ol.control.Dialog.prototype.updateElement_ = function() {
 /**
  * @private
  */
-ol.control.Dialog.prototype.initLayout_ = function(opt_options) {
+ol.control.Dialog.prototype.initLayout_ = function() {
 
-    var options = opt_options ? opt_options : {};
 
-    var className = options.className !== undefined ? options.className : 'ol-dialog';
+    var className = this.options_.className !== undefined ? this.options_.className : 'ol-dialog';
 
 /*
     var stop = L.DomEvent.stopPropagation;
@@ -129,8 +150,71 @@ ol.control.Dialog.prototype.initLayout_ = function(opt_options) {
   var grabberIcon = document.createElement('I');
   grabberIcon.className = 'fa fa-arrows-alt';
   this.grabberElement_.appendChild(grabberIcon);
+//   this.grabberElement_.addEventListener ('mousedown', this.moveStart.bind(this), false);
+//   this.grabberElement_.addEventListener ('mousemove', this.mouseMove.bind(this), false);
+//   this.grabberElement_.addEventListener ('mouseup', this.mouseUp.bind(this), false);
 
+  /*
+  this.grabberElement_.addEventListener ('click', function() {
+        console.log('click');
+  });
+
+  this.grabberElement_.addEventListener ('movestart', function() {
+        console.log('movestart');
+  });
+  this.grabberElement_.addEventListener ('moveend', function() {
+        console.log('moveend');
+  });
+  this.grabberElement_.addEventListener ('mousedown', function() {
+        console.log('mousedown');
+  });
+  this.grabberElement_.addEventListener ('mouseup', function() {
+        console.log('mouseup');
+  });	
+  this.grabberElement_.addEventListener ('mousemove', function() {
+        console.log('mousemove');	
+  });
+  this.grabberElement_.addEventListener ('pointerdrag', function() {
+        console.log('pointerdrag');
+  });
+  this.grabberElement_.addEventListener ('dblclick', function() {
+        console.log('dblclick');
+  });
+*/
+  
+
+  this.grabberElement_.addEventListener ('pointerdrag', function() {
+        console.log('grabberElement_ -> pointerdrag');
+  });
+  this.grabberElement_.addEventListener ('pointermove', function() {
+        console.log('grabberElement_ -> pointermove');
+  });
+
+  this.grabberElement_.addEventListener ('drag', function() {
+        console.log('grabberElement_ -> drag');
+  });
+  this.grabberElement_.addEventListener ('dragstart', function() {
+        console.log('grabberElement_ -> dragstart');
+  });
+  this.grabberElement_.addEventListener ('dragend', function() {
+        console.log('grabberElement_ -> dragend');
+  });  
+
+  
+    
+  this.grabberElement_.addEventListener ('mouseout', function() {
+        console.log('mouseout');
+  });
+  this.grabberElement_.addEventListener ('mouseenter', function() {
+        console.log('mouseenter');
+  });
+  this.grabberElement_.addEventListener ('mouseleave', function() {
+        console.log('mouseleave');
+  });  
+ 
+  
 /* 
+ * 
   var grabberNode = (this._grabberNode = L.DomUtil.create(
       "div",
       className + "-grabber"
@@ -196,14 +280,30 @@ ol.control.Dialog.prototype.initLayout_ = function(opt_options) {
    * @type {Element}
    */
   this.element_ = document.createElement('DIV');
-  this.element_.className = className + ' ol-selectable';
+  this.element_.className = className ;//+ ' ol-selectable';
    
-     
-  this.element_.style.width = options.size[0] + "px";
-  this.element_.style.height = options.size[1] + "px";
+  
 
-  this.element_.style.top = options.anchor[0] + "px";
-  this.element_.style.left = options.anchor[1] + "px";       
+  this.element_.addEventListener ('pointerdrag', function() {
+        console.log('this.element_ -> pointerdrag');
+  });
+  this.element_.addEventListener ('drag', function() {
+        console.log('this.element_ -> drag');
+  });
+  this.element_.addEventListener ('dragstart', function() {
+        console.log('this.element_ -> dragstart');
+  });
+  this.element_.addEventListener ('dragend', function() {
+        console.log('this.element_ -> dragend');
+  });  
+  
+  
+     
+  this.element_.style.width = this.options_.size[0] + "px";
+  this.element_.style.height = this.options_.size[1] + "px";
+
+  this.element_.style.top = this.options_.anchor[0] + "px";
+  this.element_.style.left = this.options_.anchor[1] + "px";       
     
   
   this.innerElement_.appendChild(this.contentsElement_);
@@ -227,13 +327,105 @@ ol.control.Dialog.prototype.initLayout_ = function(opt_options) {
 };
 
 
+/**
+ * Close the dilaog element.
+ * @param {ol.x} .
+ * @this {ol.control.Dialog}
+ * @api
+ */
 ol.control.Dialog.prototype.close = function() {
     this.element_.style.visibility = "hidden";
     
     this.dispatchEvent({ type:'change:active', key:'active', oldValue:false, active:true });
-
-    //this.dispatchEvent({ type:'dialog:close', key:'close', oldValue:'open', active:true });
-
-
   };
+ 
 
+/**
+ * Close the dilaog element.
+ * @param {ol.x} .
+ * @this {ol.control.Dialog}
+ * @api
+ */
+ol.control.Dialog.prototype.moveStart= function(e) {
+    this._oldMousePos[0] = e.clientX;
+    this._oldMousePos[1] = e.clientY;
+
+    console.log("moveStart @("+this._oldMousePos[0]+", "+this._oldMousePos[1]+")");
+    
+    //L.DomEvent.on(this._map, "mousemove", this._handleMouseMove, this);
+    //L.DomEvent.on(this._map, "mouseup", this._handleMouseUp, this);
+
+    //this._map.fire("dialog:movestart", this);
+    this._moving = true;
+};  
+  
+
+/**
+ * Close the dilaog element.
+ * @param {ol.x} .
+ * @this {ol.control.Dialog}
+ * @api
+ */
+
+ol.control.Dialog.prototype.mouseMove= function(e) {
+    var diffX = e.clientX - this._oldMousePos[0],
+      diffY = e.clientY - this._oldMousePos[1];
+
+    console.log("mouseMove of ("+diffX+", "+diffY+")");      
+      
+
+/*    if (this._resizing) {
+      this._resize(diffX, diffY);
+    }
+*/
+    if (this._moving) {
+      this.move(diffX, diffY);
+    }
+};
+
+/**
+ * Close the dilaog element.
+ * @param {ol.x} .
+ * @this {ol.control.Dialog}
+ * @api
+ */
+ol.control.Dialog.prototype.mouseUp= function() {
+    //L.DomEvent.off(this._map, "mousemove", this._handleMouseMove, this);
+    //L.DomEvent.off(this._map, "mouseup", this._handleMouseUp, this);
+/*
+    if (this._resizing) {
+      this._resizing = false;
+      this._map.fire("dialog:resizeend", this);
+    }
+*/
+    console.log('stopMove');
+    if (this._moving) {
+      console.log('_moving = false');
+      this._moving = false;
+      //this._map.fire("dialog:moveend", this);
+    }
+};
+
+/**
+ * Close the dilaog element.
+ * @param {ol.x} .
+ * @this {ol.control.Dialog}
+ * @api
+ */
+ol.control.Dialog.prototype.move= function(diffX, diffY) {
+    var newY = this.options_.anchor[0] + diffY;
+    var newX = this.options_.anchor[1] + diffX;
+
+    this.options_.anchor[0] = newY;
+    this.options_.anchor[1] = newX;
+
+    this.element_.style.top = this.options_.anchor[0] + "px";
+    this.element_.style.left = this.options_.anchor[1] + "px";
+
+    //this._map.fire("dialog:moving", this);
+
+    this._oldMousePos[0] += diffY;
+    this._oldMousePos[1] += diffX;
+};
+  
+  
